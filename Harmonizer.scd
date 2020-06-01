@@ -91,9 +91,10 @@ SynthDef.new(\vocHarm, {
 
 
 
-//BUSSES SETUP
+//BUSSES and reverb SETUP
 ~bus_dryIn1Amp.set(0.9); //input gain
 ~bus_drywet.set(0.9); //initial value of drywet
+
 
 //Synth activation
 
@@ -133,6 +134,10 @@ SerialPort.devices;
 
 OSCFunc.newMatching({|msg, time, addr,recvPort|~bus_drywet.set(msg[1]).postln},'/~bus_drywet', n);
 OSCFunc.newMatching({|msg, time, addr,recvPort|~bus_dryIn1Amp.set(msg[1]).postln},'/~bus_dryIn1Amp', n);
+OSCFunc.newMatching({|msg, time, addr,recvPort| ~fx_reverb.set(\mix,msg[1]).postln},'/reverbAmount', n);
+OSCFunc.newMatching({|msg, time, addr,recvPort| ~fx_reverb.set(\room,msg[1]).postln},'/room', n);
+
+
 
 /*
 b = NetAddr.new("127.0.0.1", 7771);    // create the NetAddr
