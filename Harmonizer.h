@@ -61,19 +61,7 @@ public:
         keyboardComponent.setColour(MidiKeyboardComponent::ColourIds::shadowColourId, Colours::black);
         keyboardComponent.setColour(MidiKeyboardComponent::ColourIds::upDownButtonArrowColourId, Colours::indianred);
 
-        //drywetSlider.setSliderStyle(Slider::SliderStyle::Rotary);
-        //drywetSlider.setColour(Slider::ColourIds::thumbColourId, Colours::white);
-        //drywetLabel.setJustificationType(Justification::centredBottom);
-        //drywetLabel.attachToComponent(&drywetSlider, false);
-        //drywetSlider.setRange(0.00f, 1.00f, 0.01f);
-        //drywetSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20);
-        //drywetLabel.setText("dry/wet", dontSendNotification);
-        //drywetLabel.setColour(Label::textColourId, Colours::white);
-        //drywetSlider.setColour(Slider::ColourIds::textBoxTextColourId, Colours::grey);
-        //drywetSlider.setValue(0.5f);
-        //drywetSlider.setBounds(10, 10, 180, 180);
-        //addAndMakeVisible(drywetSlider);
-        //addAndMakeVisible(drywetLabel);
+      
 
         if (!sender.connect("127.0.0.1", 57120))
             showConnectionErrorMessage("Error: could not connect to UDP port  57120.");
@@ -93,7 +81,7 @@ public:
                 showConnectionErrorMessage("Error: could not send OSC message.");
         };
 
-        drywet_label.setColour(Label::textColourId, Colours::orange);
+        drywet_label.setColour(Label::textColourId, Colours::white);
         drywet_label.attachToComponent(&drywet_slider, false);
         drywet_label.setText("dry / wet", dontSendNotification);
         drywet_label.setJustificationType(Justification::centredBottom);
@@ -108,11 +96,11 @@ public:
         reverb_slider.onValueChange = [this]
         {
             // create and send an OSC message with an address and a float value:
-            if (!sender.send("/juce/drywet", (float)reverb_slider.getValue())) // [5]
+            if (!sender.send("/reverbAmount", (float)reverb_slider.getValue())) // [5]
                 showConnectionErrorMessage("Error: could not send OSC message.");
         };
 
-        reverb_label.setColour(Label::textColourId, Colours::orange);
+        reverb_label.setColour(Label::textColourId, Colours::white);
         reverb_label.setText("reverb", dontSendNotification);
         reverb_label.attachToComponent(&reverb_slider, true);
         addAndMakeVisible(reverb_label);
@@ -130,7 +118,7 @@ public:
                 showConnectionErrorMessage("Error: could not send OSC message.");
         };
 
-        gain_label.setColour(Label::textColourId, Colours::orange);
+        gain_label.setColour(Label::textColourId, Colours::white);
         gain_label.setText("gain", dontSendNotification);
         gain_label.attachToComponent(&gain_slider, true);
         addAndMakeVisible(gain_label);
@@ -143,11 +131,11 @@ public:
         room_slider.onValueChange = [this]
         {
             // create and send an OSC message with an address and a float value:
-            if (!sender.send("/juce/drywet", (float)room_slider.getValue())) // [5]
+            if (!sender.send("/room", (float)room_slider.getValue())) // [5]
                 showConnectionErrorMessage("Error: could not send OSC message.");
         };
 
-        room_label.setColour(Label::textColourId, Colours::orange);
+        room_label.setColour(Label::textColourId, Colours::white);
         room_label.setText("room", dontSendNotification);
         room_label.attachToComponent(&room_slider, true);
         addAndMakeVisible(room_label);
@@ -200,8 +188,8 @@ public:
     {
         g.fillAll (Colours::black);
         g.setColour(Colours::white); //setting the colour for future drawing
-        g.setFont(Font("Lucida Sans", 20.0f, Font::plain));
-        g.drawFittedText("harmonizer", 250, 20, 10, 150, Justification::bottomLeft, 12);
+        g.setFont(Font("Lucida Sans", 30.0f, Font::plain));
+        g.drawFittedText("Harmonizer", 20, 150, 200, 20, Justification::top, 10);
     }
 
    
@@ -231,6 +219,11 @@ public:
         gain_slider.setBoundsRelative(startX - 0.20f, startY, dialWidth / 5, dialHeight * 2);
         reverb_slider.setBoundsRelative(startX + 0.10f, startY, dialWidth / 5, dialHeight * 2);
         room_slider.setBoundsRelative(startX + 0.30f, startY, dialWidth / 5, dialHeight * 2);
+
+        gain_label.setBoundsRelative(startX - 0.15f, 0.023f , dialWidth / 6, dialHeight/2);
+        reverb_label.setBoundsRelative(startX + 0.15f, 0.023f, dialWidth / 6, dialHeight / 2);
+        room_label.setBoundsRelative(startX + 0.35f, 0.023f, dialWidth / 6, dialHeight / 2);
+
 
     }
 
