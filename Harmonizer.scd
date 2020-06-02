@@ -27,7 +27,7 @@ s.boot;
 
 (
 SynthDef.new(\monAudioInput, {
-	arg inChannel = 0, amp = 1, outBus;
+	arg inChannel = 0, amp = 0.5, outBus;
 	var sig = SoundIn.ar(bus: inChannel, mul: amp); //defaults to first channel of system audio input
 	OffsetOut.ar(outBus, sig);
 }).add;
@@ -36,8 +36,8 @@ SynthDef.new(\Pitch, {
 	arg input, ampThresh = 0.1, median = 7, minFreq = 60, maxFreq = 4000, outBus;
 	var sigIn, freq, hasFreq;
 	sigIn = In.ar(input);
-	# freq, hasFreq = Pitch.kr(sigIn, ampThreshold: ampThresh, median: median, minFreq: minFreq, maxFreq: maxFreq);
-	//#freq, hasFreq = Tartini.kr(sigIn,0.9,2048);
+	//# freq, hasFreq = Pitch.kr(sigIn, ampThreshold: ampThresh, median: median, minFreq: minFreq, maxFreq: maxFreq);
+	#freq, hasFreq = Tartini.kr(sigIn,0.9,2048);
 	Out.kr(outBus, freq.cpsmidi.round(1));
 }).add;
 
