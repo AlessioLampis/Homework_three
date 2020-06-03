@@ -7,7 +7,7 @@
 */
 
 #include <JuceHeader.h>
-#include "HandlingMidiEventsTutorial.h"
+#include "Harmonizer.h"
 
 class Application    : public JUCEApplication
 {
